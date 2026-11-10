@@ -36,8 +36,8 @@ export function Landing() {
           <div className="space-y-7">
             <h1 className="text-[2.75rem] leading-[1.02] font-bold tracking-[-0.02em] sm:text-6xl lg:text-7xl">Pist hepimizin.</h1>
             <p className="max-w-xl text-lg leading-relaxed text-salon-ink/80 sm:text-xl">
-              Kimin abrazosunun fazla sıkı olduğunu, kimin öğrencilerine gece yarısı mesaj attığını, kimin kapıdaki parayla ortadan kaybolduğunu çoğumuz biliyoruz. Ama hep
-              kulaktan kulağa anlattık. Burası, anlatılanlar unutulmasın diye var.
+              Kimin dans ederken elinin sırttan aşağı kaydığını, kimin öğrencilerine gece yarısı mesaj attığını, kimin "hayır"ı duymazdan geldiğini çoğumuz biliyoruz. Kimin
+              hırsızlık yaptığını da. Ama hep kulaktan kulağa anlattık. Burası, anlatılanlar unutulmasın diye var.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link to="/kisiler" className="rounded-full bg-salon-ink px-6 py-3 text-sm font-semibold text-salon transition hover:bg-white">
