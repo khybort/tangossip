@@ -1,0 +1,8 @@
+{
+  "name": "ifsa-test",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [{ "binding": "DB", "database_name": "ifsa-test", "database_id": "local-test", "migrations_dir": "migrations" }],
+  "vars": { "MAIL_FROM": "", "TURNSTILE_SITE_KEY": "" }
+}

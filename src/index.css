@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --color-paper: #f6f2ec;
+  --color-card: #fffdf9;
+  --color-ink: #1c1917;
+  --color-muted: #6b625a;
+  --color-line: #e3dbd0;
+  --color-accent: #8f1d1d;
+  --color-accent-soft: #f6e3e1;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #fbf0d9;
+  --color-ok: #1f6b3a;
+  --color-ok-soft: #e1f1e6;
+  --color-salon: #3a0f18;
+  --color-salon-ink: #f4e9dc;
+  --color-parquet: #b98a5e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #151312;
+    --color-card: #1e1b19;
+    --color-ink: #efe9e2;
+    --color-muted: #a59a8f;
+    --color-line: #34302c;
+    --color-accent: #e06b5f;
+    --color-accent-soft: #3a1f1c;
+    --color-warn: #e8b85a;
+    --color-warn-soft: #3a2e17;
+    --color-ok: #6fcf8f;
+    --color-ok-soft: #1b3324;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+input,
+textarea,
+select {
+  background: var(--color-card);
+}
+
+/* Landing: a milonga floor seen from above, couples circling counter-clockwise like a ronda. */
+.ronda {
+  position: relative;
+  width: min(100%, 460px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.ronda-floor {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 55%, rgb(0 0 0 / 0.28) 100%),
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.07) 0 1px, transparent 1px 38px),
+    repeating-linear-gradient(0deg, transparent 0 118px, rgb(0 0 0 / 0.06) 118px 119px),
+    linear-gradient(135deg, #c99a6b, var(--color-parquet) 45%, #9c6f47);
+  box-shadow: inset 0 0 0 10px rgb(244 233 220 / 0.06), 0 30px 80px rgb(0 0 0 / 0.35);
+}
+
+.ronda-track {
+  position: absolute;
+  inset: 0;
+  animation: ronda 80s linear infinite reverse;
+}
+
+.ronda-couple {
+  --r: calc(360deg / var(--n) * var(--i));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 15px;
+  margin: -7.5px 0 0 -15px;
+  background:
+    radial-gradient(circle at 7.5px 50%, var(--color-salon) 7px, transparent 7.5px),
+    radial-gradient(circle at 22.5px 50%, var(--color-salon-ink) 7px, transparent 7.5px);
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.3));
+  transform: rotate(var(--r)) translateY(-35cqw);
+}
+
+.ronda-couple:nth-child(4) {
+  background:
+    radial-gradient(circle at 7.5px 50%, var(--color-accent) 7px, transparent 7.5px),
+    radial-gradient(circle at 22.5px 50%, var(--color-salon-ink) 7px, transparent 7.5px);
+}
+
+.ronda {
+  container-type: inline-size;
+}
+
+@keyframes ronda {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ronda-track {
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 56px;
+    right: -12px;
+    height: 1px;
+    background: var(--color-line);
+  }
+}
+
+.landing a:focus-visible,
+.landing button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.landing {
+  overflow-x: clip;
+}
