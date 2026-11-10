@@ -365,7 +365,18 @@ member.get('/me/export', async (c) => {
     .bind(a.id)
     .all();
   const { results: votes } = await c.env.DB.prepare('SELECT report_id, kind, value, created_at FROM vote WHERE account_id = ?').bind(a.id).all();
-  const { totp_secret: _s, ...profile } = a;
+  const profile = {
+    id: a.id,
+    email: a.email,
+    name: a.name,
+    city: a.city,
+    danceSince: a.dance_since,
+    instagram: a.instagram,
+    references: a.references_text,
+    status: a.status,
+    role: a.role,
+    createdAt: a.created_at,
+  };
   return c.json({ exportedAt: Date.now(), profile, reports, votes });
 });
 

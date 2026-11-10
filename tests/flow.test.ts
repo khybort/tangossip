@@ -80,6 +80,21 @@ describe('access rules', () => {
     expect((await visitor.get('/admin/queues')).status).toBe(401);
   });
 
+  it('a password-only session cannot re-enable TOTP to gain mfa', async () => {
+    const u = await staff('moderator');
+    const fresh = new (await import('./helpers')).Client();
+    const login = await fresh.post('/auth/login', { email: u.email, password: 'correct horse battery' });
+    expect(login.json.error).toBe('totp_required');
+    const again = await u.client.post('/auth/totp/enable', { code: '000000' });
+    expect(again.json.error).toBe('totp_already_enabled');
+  });
+
+  it('data export never includes password hash or TOTP secret', async () => {
+    const u = await staff('moderator');
+    const out = await u.client.get('/me/export');
+    expect(JSON.stringify(out.json)).not.toMatch(/pbkdf2|totp_secret|"pw"/);
+  });
+
   it('rejects cross-origin writes', async () => {
     const res = await (await import('cloudflare:test')).SELF.fetch('https://tangossip.test/api/auth/login', {
       method: 'POST',

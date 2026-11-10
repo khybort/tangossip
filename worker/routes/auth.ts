@@ -226,6 +226,9 @@ auth.post('/totp/enable', async (c) => {
   const a = requireAccount(c);
   const b = await body(c);
   if (!isStaff(a) || !a.totp_secret) fail(400, 'totp_not_setup');
+  // Once enabled, a password-only session must sign in again with a code; otherwise this endpoint would let it brute-force its way to mfa.
+  if (a.totp_enabled) fail(409, 'totp_already_enabled');
+  await limit(c, `totp:${a.id}`, 5, 15 * MIN);
   if (!(await verifyTotp(a.totp_secret, b.code))) fail(400, 'bad_totp');
   await c.env.DB.batch([
     c.env.DB.prepare('UPDATE account SET totp_enabled = 1 WHERE id = ?').bind(a.id),
